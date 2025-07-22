@@ -10,13 +10,14 @@ sin_theta = sp.sin(theta)
 # Unknowns to solve for
 x_ddot, theta_ddot = sp.symbols('x_ddot theta_ddot')
 
-eq1 = g * theta - 3/2 * l *(2/(m*l)*F-(2*x_ddot*(M/(m*l)+1/l)))-x_ddot
-eq2 = 2/(m*l)*F - 2 *(M/(m*l)+ 1/l)*(g*theta - 3/2*l*theta_dot)-theta_ddot
+eq1 = (M + m) * x_ddot + (1/2) * m * l * theta_ddot * sp.cos(theta) - F
+eq2 = (7/12) * m * l**2 * theta_ddot + (1/2) * m * l * x_ddot * sp.cos(theta) + (1/2) * m * g * l * sp.sin(theta)
 
-#solve the equations for x_ddot and theta_ddot
-solution = sp.solve([eq1, eq2], [x_ddot, theta_ddot])
+# Apply small-angle approximations: sin(theta) ≈ theta, cos(theta) ≈ 1
+eq1_lin = eq1.subs({sp.sin(theta): theta, sp.cos(theta): 1})
+eq2_lin = eq2.subs({sp.sin(theta): theta, sp.cos(theta): 1})
 
-print("x_ddot =")
-sp.pprint(solution[x_ddot])
-print("\ntheta_ddot =")
-sp.pprint(solution[theta_ddot])
+# Solve the linearized system for x_ddot and theta_ddot
+linearized_solutions = sp.solve([eq1_lin, eq2_lin], (x_ddot, theta_ddot), simplify=True)
+
+print(linearized_solutions)
