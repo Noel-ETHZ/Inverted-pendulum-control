@@ -6,8 +6,20 @@ This project aims to simulate and stabilize an inverted pendulum system on a mov
 
 The simulation occurs in 2 dimensions: the cart moves horizontally along a straight line (1D linear motion), while the pendulum swings freely in a vertical plane attached to the cart.
 
+## Animation
+
+![Inverted Pendulum Animation](plots/pendulum_animation.gif)
+
+*The animation shows the LQR controller stabilizing the pendulum from an initial tilted position back to the upright equilibrium.*
+
+### Parameters
+
 Key parameters include:
 - **M**: Mass of the cart (default: 1.0 kg) – represents the base platform's weight.
 - **m**: Mass of the pendulum (default: 0.1 kg) – the weight of the rod or bob being balanced.
-- **l**: Length of the pendulum (default: 0.5 m) – the distance from the pivot point to the center of mass, affecting swing dynamics.
+- **l**: Length of the pendulum (default: 0.5 m) - l/2: distance from joint to center of mass of the pendulum.
 - **g**: Acceleration due to gravity (default: 9.81 m/s²) – the constant downward force influencing instability.
+
+
+- **state**: It is defined as follows:
+s = [x, x_dot, theta, theta_dot]
