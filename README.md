@@ -19,7 +19,5 @@ Key parameters include:
 - **m**: Mass of the pendulum (default: 0.1 kg) – the weight of the rod or bob being balanced.
 - **l**: Length of the pendulum (default: 0.5 m) - l/2: distance from joint to center of mass of the pendulum.
 - **g**: Acceleration due to gravity (default: 9.81 m/s²) – the constant downward force influencing instability.
-
-
 - **state**: It is defined as follows:
 s = [x, x_dot, theta, theta_dot]

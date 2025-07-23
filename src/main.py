@@ -115,9 +115,8 @@ left_spoke2, = ax_anim.plot([], [], 'white', linewidth=2)
 right_spoke1, = ax_anim.plot([], [], 'white', linewidth=2)
 right_spoke2, = ax_anim.plot([], [], 'white', linewidth=2)
 
-pendulum_line, = ax_anim.plot([], [], 'r-', linewidth=3)
-pendulum_bob = plt.Circle((0, 0), 0.05, color='red')
-ax_anim.add_patch(pendulum_bob)
+pendulum_line, = ax_anim.plot([], [], 'r-', linewidth=8, solid_capstyle='round')
+# Removed pendulum_bob - no particle at the end
 
 # Time indicator lines for the plots
 time_line1, = ax1.plot([], [], 'r--', alpha=0.7)
@@ -162,12 +161,14 @@ def animate(frame):
                          [wheel_y + spoke_length * cos_rot, wheel_y - spoke_length * cos_rot])
     
     # Calculate pendulum position (from top center of cart)
-    pendulum_x = x + pendulum_length * np.sin(theta)
-    pendulum_y = pendulum_length * np.cos(theta)
+    cart_top_y = cart_height/2  # Top of the cart
+    pendulum_base_x = x
+    pendulum_base_y = cart_top_y
+    pendulum_tip_x = x + pendulum_length * np.sin(theta)
+    pendulum_tip_y = cart_top_y + pendulum_length * np.cos(theta)
     
     # Update pendulum (attached to top of cart)
-    pendulum_line.set_data([x, pendulum_x], [0, pendulum_y])
-    pendulum_bob.center = (pendulum_x, pendulum_y)
+    pendulum_line.set_data([pendulum_base_x, pendulum_tip_x], [pendulum_base_y, pendulum_tip_y])
     
     # Update time indicators on plots
     y_range1 = ax1.get_ylim()
@@ -176,7 +177,7 @@ def animate(frame):
     time_line2.set_data([current_time, current_time], y_range2)
     
     return (cart, left_wheel, right_wheel, left_spoke1, left_spoke2, 
-            right_spoke1, right_spoke2, pendulum_line, pendulum_bob, 
+            right_spoke1, right_spoke2, pendulum_line, 
             time_line1, time_line2)
 
 # Create animation (every 3rd frame for slower, smoother playback)
